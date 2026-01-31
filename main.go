@@ -166,4 +166,53 @@ func AnalyzeEscape() {
 
 func main() {
 	ExploreProcess()
+	fmt.Println("\n=== Math Operations ===")
+
+	// Factorials
+	for _, n := range []int{0, 5, -2} {
+		val, _ := Factorial(n)
+		fmt.Printf("Factorial(%d) = %d\n", n, val)
+	}
+	// Prime Numbers
+	for _, n := range []int{17, 20, 25} {
+		res, _ := IsPrime(n)
+		fmt.Printf("IsPrime(%d) = %v\n", n, res)
+	}
+	// Powers
+	p1, _ := Power(2, 8)
+	p2, _ := Power(5, -3)
+	fmt.Printf("Power(2, 8) = %d\n", p1)
+	fmt.Printf("Power(5, -3) = %d\n", p2)
+
+	fmt.Println("\n=== Closure Demonstration ===")
+	count0 := MakeCounter(0)
+	count100 := MakeCounter(100)
+	fmt.Printf("Counter1 (Start 0): %d, %d\n", count0(), count0())
+	fmt.Printf("Counter2 (Start 100): %d\n", count100())
+
+	double := MakeMultiplier(2)
+	triple := MakeMultiplier(3)
+
+	fmt.Printf("Multiplier Demo: %d doubled is %d, tripled is %d\n", 5, double(5), triple(5))
+
+	fmt.Println("\n=== Higher-Order Functions ===")
+	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	fmt.Printf("Original: %v\n", nums)
+
+	fmt.Printf("Squared: %v\n", Apply(nums, func(x int) int { return x * x }))
+	fmt.Printf("Evens only: %v\n", Filter(nums, func(x int) bool { return x%2 == 0 }))
+	fmt.Printf("Sum of all: %d\n", Reduce(nums, 0, func(acc, x int) int { return acc + x }))
+
+	add10 := func(x int) int { return x + 10 }
+	doubleThenAdd10 := Compose(add10, double)
+	fmt.Printf("Compose (Double then Add 10) on 5: %d\n", doubleThenAdd10(5))
+
+	fmt.Println("\n=== Pointer Demonstration ===")
+	x, y := 5, 10
+	fmt.Printf("Before SwapValues: a=%d, b=%d\n", x, y)
+	SwapValues(x, y)
+	fmt.Printf("After SwapValues: a=%d, b=%d (originals unchanged)\n", x, y)
+
+	SwapPointers(&x, &y)
+	fmt.Printf("After SwapPointers: a=%d, b=%d (originals swapped)\n", x, y)
 }
