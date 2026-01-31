@@ -73,26 +73,38 @@ func MakeAccumulator(initial int) (add func(int), subtract func(int), get func()
 	}
 	return add, subtract, get
 }
+
+func Apply(nums []int, operation func(int) int) []int {
+	result := make([]int, len(nums))
+	for i, num := range nums {
+		result[i] = operation(num)
+	}
+	return result
+}
+
+func Filter(nums []int, predicate func(int) bool) []int {
+	var result []int
+	for _, num := range nums {
+		if predicate(num) {
+			result = append(result, num)
+		}
+	}
+	return result
+}
+
+func Reduce(nums []int, initial int, operation func(accumulator, current int) int) int {
+	accumulator := initial
+	for _, num := range nums {
+		accumulator = operation(accumulator, num)
+	}
+	return accumulator
+}
+
+func Compose(f func(int) int, g func(int) int) func(int) int {
+	return func(x int) int {
+		return f(g(x))
+	}
+}
 func main() {
-	// --- Testing MakeCounter ---
-	counter1 := MakeCounter(0)
-	fmt.Println(counter1()) // 1
-	fmt.Println(counter1()) // 2
 
-	counter2 := MakeCounter(10)
-	fmt.Println(counter2()) // 11
-	fmt.Println(counter1()) // 3 (Independent from counter2)
-
-	// --- Testing MakeMultiplier ---
-	double := MakeMultiplier(2)
-	triple := MakeMultiplier(3)
-	fmt.Println(double(5)) // 10
-	fmt.Println(triple(5)) // 15
-
-	// --- Testing MakeAccumulator ---
-	add, sub, get := MakeAccumulator(100)
-	add(50)
-	fmt.Println(get()) // 150
-	sub(20)
-	fmt.Println(get()) // 130
 }
