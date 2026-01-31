@@ -117,6 +117,53 @@ func ExploreProcess() {
 
 	fmt.Printf("\nNote: Other processes cannot access these memory addresses due to process isolation.\n")
 }
+
+// This function will not modify the original variable, because Go uses "pass by value".
+func DoubleValue(x int) {
+	x = x * 2
+}
+
+// This function will modify the original variable, because we are passing a pointer to it,
+// allowing us to change the value at that memory address.
+func DoublePointer(x *int) {
+	*x = *x * 2
+}
+
+// This variable stays on the stack
+func CreateOnStack() int {
+	x := 42
+	return x
+}
+
+// This variable escapes to the heap
+func CreateOnHeap() *int {
+	x := 42
+	return &x
+}
+
+func SwapValues(a, b int) (int, int) {
+	return b, a
+}
+
+func SwapPointers(a, b *int) {
+	temp := *a
+	*a = *b
+	*b = temp
+}
+
+/*
+  - Which variables escaped? The variable 'x' in CreateOnHeap() escaped this is because the functions returns a pointer
+    to a local variable. Basically, the address of 'x' is returned, so 'x' must live longer than the function call.
+    If 'x' stayed on the stack, it would be deleted when the function finishes, leaving the pointer dangling.
+
+  - What does "escapes to heap" mean?
+    It means the variable is moved from the stock to the heap so it can live lponger than the function that created it.
+*/
+func AnalyzeEscape() {
+	_ = CreateOnStack()
+	_ = CreateOnHeap()
+}
+
 func main() {
 	ExploreProcess()
 }
