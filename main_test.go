@@ -40,7 +40,7 @@ func TestPrime(t *testing.T) {
 	}{
 		{name: "Prime number: 2", input: 2, want: true, wantErr: false},
 		{name: "Prime number: 3", input: 3, want: true, wantErr: false},
-		{name: "Composite number: 6", input: 6, want: false, wantErr: true},
+		{name: "Composite number: 6", input: 6, want: false, wantErr: false},
 		{name: "Number less than 2", input: 1, want: false, wantErr: true},
 		{name: "Negative number", input: -5, want: false, wantErr: true},
 		{name: "Large prime number: 29", input: 29, want: true, wantErr: false},
